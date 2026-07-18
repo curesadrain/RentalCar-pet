@@ -3,6 +3,8 @@ import css from "./CatalogFilters.module.css";
 
 interface Props {
   pendingFilters: CarsFilters;
+  brands: string[];
+  priceOptions: number[];
   onChange: (filters: CarsFilters) => void;
   onSearch: () => void;
   onClear: () => void;
@@ -10,6 +12,8 @@ interface Props {
 
 function CatalogFilters({
   pendingFilters,
+  brands,
+  priceOptions,
   onChange,
   onSearch,
   onClear,
@@ -30,6 +34,11 @@ function CatalogFilters({
           <option value="" disabled hidden>
             Choose a brand
           </option>
+          {brands.map((brand) => (
+            <option key={brand} value={brand}>
+              {brand}
+            </option>
+          ))}
         </select>
       </div>
       <div className={css.field}>
@@ -46,23 +55,42 @@ function CatalogFilters({
           <option value="" disabled hidden>
             Choose a price
           </option>
+          {priceOptions.map((price) => (
+            <option key={price} value={price}>
+              {price}
+            </option>
+          ))}
         </select>
       </div>
       <div className={css.mileage}>
-        <input
-          placeholder="From"
-          value={pendingFilters.minMileage ?? ""}
-          onChange={(e) =>
-            onChange({ ...pendingFilters, minMileage: e.target.value })
-          }
-        />
-        <input
-          placeholder="To"
-          value={pendingFilters.maxMileage ?? ""}
-          onChange={(e) =>
-            onChange({ ...pendingFilters, maxMileage: e.target.value })
-          }
-        />
+        <label id="mileage-label">Car mileage / km</label>
+
+        <div
+          className={css.mileage}
+          role="group"
+          aria-labelledby="mileage-label"
+        >
+          <input
+            type="number"
+            min={0}
+            aria-label="From"
+            placeholder="From"
+            value={pendingFilters.minMileage ?? ""}
+            onChange={(e) =>
+              onChange({ ...pendingFilters, minMileage: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            min={0}
+            aria-label="To"
+            placeholder="To"
+            value={pendingFilters.maxMileage ?? ""}
+            onChange={(e) =>
+              onChange({ ...pendingFilters, maxMileage: e.target.value })
+            }
+          />
+        </div>
       </div>
       <button className={css.button} onClick={onSearch}>
         Search
