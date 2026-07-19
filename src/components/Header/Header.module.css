@@ -1,5 +1,57 @@
 .header {
   display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
   justify-content: space-between;
   align-items: center;
+  padding: 24px 20px;
+}
+
+.logo {
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.navLink {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.navLink:hover,
+.navLink:focus {
+  color: var(--gray);
+}
+
+.navLinkActive {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--light-blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.route {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  margin-left: 15px;
+}
+
+@media (min-width: 768px) {
+  .route {
+    margin-left: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .route {
+    margin-left: 32px;
+  }
 }

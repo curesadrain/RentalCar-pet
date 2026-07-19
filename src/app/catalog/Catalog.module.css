@@ -1,0 +1,115 @@
+.catalog {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+/* === MOBILE === */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.gridWrapper {
+  position: relative;
+}
+
+.gridBlurred {
+  filter: blur(2px);
+  opacity: 0.6;
+  pointer-events: none;
+  transition:
+    filter 0.2s,
+    opacity 0.2s;
+}
+
+.loadMoreButton {
+  display: block;
+  margin: 32px auto 0;
+  margin-bottom: 32px;
+  padding: 12px 38px;
+  border: 1px solid var(--light-blue);
+  border-radius: 12px;
+  background: transparent;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  cursor: pointer;
+}
+
+.loadMoreButton:hover:not(:disabled) {
+  border: 1px solid var(--dark-blue);
+}
+
+.loadMoreButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.emptySearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 40%;
+  aspect-ratio: 413 / 388;
+  margin-bottom: 40px;
+}
+
+.emptyImage {
+  object-fit: contain;
+}
+
+.emptyHeader {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.emptyInfo {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  max-width: 360px;
+  margin-bottom: 40px;
+}
+
+.emptyButton {
+  border: 1px solid var(--light-blue);
+  border-radius: 12px;
+  padding: 12px 31px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+}
+
+.emptyState {
+  text-align: center;
+  color: #6b7280;
+  padding: 40px 0;
+}
+
+/* === TABLET === */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* === DESKTOP (1440px+) — 4 колонки, как на макете === */
+@media (min-width: 1440px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 32px;
+    column-gap: 48px;
+  }
+}

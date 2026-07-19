@@ -7,20 +7,22 @@ import Link from "next/link";
 function CarCard({ car }: { car: Car }) {
   return (
     <li className={css.card}>
-      <Image
-        src={car.img}
-        alt={`${car.brand} ${car.model}`}
-        width={244}
-        height={268}
-      />
+      <div className={css.imageWrapper}>
+        <Image
+          src={car.img}
+          className={css.image}
+          alt={`${car.brand} ${car.model}`}
+          fill
+        />
+      </div>
       <div className={css.header}>
-        <p>
+        <p className={css.title}>
           {car.brand} <span className={css.accent}>{car.model}</span>,{" "}
           {car.year}
         </p>
-        <p>{car.rentalPrice}</p>
+        <p className={css.price}>${car.rentalPrice}</p>
       </div>
-      <p>
+      <p className={css.meta}>
         {car.location.city}
         <span className={css.stick}> | </span>
         {car.location.country}
@@ -31,7 +33,11 @@ function CarCard({ car }: { car: Car }) {
         <span className={css.stick}> | </span>
         {car.mileage} km
       </p>
-      <Link href={`/catalog/${car.id}`} target="_blank">
+      <Link
+        href={`/catalog/${car.id}`}
+        target="_blank"
+        className={css.readMoreButton}
+      >
         Read more
       </Link>
     </li>

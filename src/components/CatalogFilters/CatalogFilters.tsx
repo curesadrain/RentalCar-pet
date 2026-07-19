@@ -24,54 +24,69 @@ function CatalogFilters({
         <label htmlFor="brand-select" className={css.label}>
           Car Brand
         </label>
-        <select
-          id="brand-select"
-          value={pendingFilters.brand ?? ""}
-          onChange={(e) =>
-            onChange({ ...pendingFilters, brand: e.target.value || undefined })
-          }
-        >
-          <option value="" disabled hidden>
-            Choose a brand
-          </option>
-          {brands.map((brand) => (
-            <option key={brand} value={brand}>
-              {brand}
+        <div className={css.selectWrapper}>
+          <select
+            id="brand-select"
+            className={css.select}
+            value={pendingFilters.brand ?? ""}
+            onChange={(e) =>
+              onChange({
+                ...pendingFilters,
+                brand: e.target.value || undefined,
+              })
+            }
+          >
+            <option value="" disabled hidden>
+              Choose a brand
             </option>
-          ))}
-        </select>
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className={css.field}>
         <label htmlFor="price-select" className={css.label}>
           Price/ 1hour
         </label>
-        <select
-          id="price-select"
-          value={pendingFilters.price ?? ""}
-          onChange={(e) =>
-            onChange({ ...pendingFilters, price: e.target.value || undefined })
-          }
-        >
-          <option value="" disabled hidden>
-            Choose a price
-          </option>
-          {priceOptions.map((price) => (
-            <option key={price} value={price}>
-              {price}
+        <div className={css.selectWrapper}>
+          <select
+            id="price-select"
+            className={css.select}
+            value={pendingFilters.price ?? ""}
+            onChange={(e) =>
+              onChange({
+                ...pendingFilters,
+                price: e.target.value || undefined,
+              })
+            }
+          >
+            <option value="" disabled hidden>
+              Choose a price
             </option>
-          ))}
-        </select>
+            {priceOptions.map((price) => (
+              <option key={price} value={price}>
+                {price}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-      <div className={css.mileage}>
-        <label id="mileage-label">Car mileage / km</label>
+      <div className={css.field}>
+        <label id="mileage-label" className={css.label}>
+          Car mileage / km
+        </label>
 
         <div
-          className={css.mileage}
+          className={css.mileageGroup}
           role="group"
           aria-labelledby="mileage-label"
         >
           <input
             type="number"
+            className={css.mileageInput}
             min={0}
             aria-label="From"
             placeholder="From"
@@ -80,8 +95,10 @@ function CatalogFilters({
               onChange({ ...pendingFilters, minMileage: e.target.value })
             }
           />
+          <span className={css.mileageDash}>|</span>
           <input
             type="number"
+            className={css.mileageInput}
             min={0}
             aria-label="To"
             placeholder="To"
@@ -92,12 +109,14 @@ function CatalogFilters({
           />
         </div>
       </div>
-      <button className={css.button} onClick={onSearch}>
-        Search
-      </button>
-      <button className={css.clear} onClick={onClear}>
-        Clear filters
-      </button>
+      <div className={css.searchGroup}>
+        <button className={css.searchButton} onClick={onSearch}>
+          Search
+        </button>
+        <button className={css.clearButton} onClick={onClear}>
+          Clear filters
+        </button>
+      </div>
     </div>
   );
 }

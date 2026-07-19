@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { RentalFormValues } from "@/types/form";
+import { LuCircleAlert } from "react-icons/lu";
 
 const RentalFormSchema = Yup.object({
   name: Yup.string()
@@ -46,6 +47,11 @@ function RentalForm({ carId }: { carId: string }) {
     >
       {({ isSubmitting, errors, touched }) => (
         <Form className={css.form}>
+          <h2 className={css.title}>Book your car now</h2>
+          <p className={css.subtitle}>
+            Stay connected! We are always ready to help you.
+          </p>
+
           <div className={css.field}>
             <Field
               id="name"
@@ -58,6 +64,9 @@ function RentalForm({ carId }: { carId: string }) {
             <label htmlFor="name" className={css.floatingLabel}>
               Name*
             </label>
+            {errors.name && touched.name && (
+              <LuCircleAlert className={css.errorIcon} />
+            )}
             <ErrorMessage name="name" component="p" className={css.errorText} />
           </div>
 
@@ -70,7 +79,12 @@ function RentalForm({ carId }: { carId: string }) {
                 errors.email && touched.email ? css.inputError : css.input
               }
             />
-            <label htmlFor="email">Email*</label>
+            <label htmlFor="email" className={css.floatingLabel}>
+              Email*
+            </label>
+            {errors.email && touched.email && (
+              <LuCircleAlert className={css.errorIcon} />
+            )}
             <ErrorMessage
               name="email"
               component="p"
@@ -82,11 +96,17 @@ function RentalForm({ carId }: { carId: string }) {
             <Field
               as="textarea"
               name="comment"
-              placeholder="Comment*"
+              placeholder=" "
               className={
                 errors.comment && touched.comment ? css.inputError : css.input
               }
             />
+            <label htmlFor="comment" className={css.floatingLabel}>
+              Comment
+            </label>
+            {errors.comment && touched.comment && (
+              <LuCircleAlert className={css.errorIcon} />
+            )}
             <ErrorMessage
               name="comment"
               component="p"
@@ -94,7 +114,11 @@ function RentalForm({ carId }: { carId: string }) {
             />
           </div>
 
-          <button type="submit" disabled={isSubmitting}>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={css.submitButton}
+          >
             {isSubmitting ? "Sending..." : "Send"}
           </button>
         </Form>

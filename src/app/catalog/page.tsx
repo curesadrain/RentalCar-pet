@@ -3,11 +3,16 @@
 import { useState } from "react";
 import css from "./Catalog.module.css";
 import { CarsFilters } from "@/types/car";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
 import { fetchCars, getFilters } from "../lib/api/cars";
 import CarCard from "@/components/CarCard/CarCard";
 import Loader from "@/components/Loader/Loader";
 import CatalogFilters from "@/components/CatalogFilters/CatalogFilters";
+import Image from "next/image";
 
 function Catalog() {
   const [filters, setFilters] = useState<CarsFilters>({});
@@ -44,6 +49,7 @@ function Catalog() {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
+    isFetching,
     isError,
   } = useInfiniteQuery({
     queryKey: ["cars", filters],
@@ -51,12 +57,15 @@ function Catalog() {
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+    placeholderData: keepPreviousData,
   });
 
   const cars = data?.pages.flatMap((page) => page.cars) ?? []; // групування вiдповiдей
 
+  const isRefetching = isFetching && !isFetchingNextPage;
+
   return (
-    <section aria-label="Car Catalog">
+    <section aria-label="Car Catalog" className={css.catalog}>
       <CatalogFilters
         pendingFilters={pendingFilters}
         brands={brands}
@@ -65,20 +74,57 @@ function Catalog() {
         onSearch={handleSearch}
         onClear={handleClear}
       />
-      <ul className={css.grid}>
+      {/* <ul className={css.grid}>
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}
-      </ul>
+      </ul> */}
 
       {isLoading && <Loader />}
-      {!isLoading && cars.length === 0 && !isError && (
-        <p>No cars found matching your criteria</p>
+
+      {!isLoading && (
+        <div className={css.gridWrapper}>
+          <ul className={`${css.grid} ${isRefetching ? css.gridBlurred : ""}`}>
+            {cars.map((car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </ul>
+          {isRefetching && <Loader />}
+        </div>
       )}
-      {isError && <p>Something went wrong</p>}
+
+      {!isLoading && cars.length === 0 && !isError && (
+        <div className={css.emptySearch}>
+          <div className={css.imageWrapper}>
+            <Image
+              src="/images/no-match.png"
+              className={css.emptyImage}
+              alt="No cars found"
+              fill
+            />
+          </div>
+          <h2 className={css.emptyHeader}>No cars found</h2>
+          <p className={css.emptyInfo}>
+            We couldn`t find any cars that match your current filters. Try
+            changing your search criteria or reset the filters.
+          </p>
+          <button
+            className={css.emptyButton}
+            type="button"
+            onClick={handleClear}
+          >
+            Reset Filters
+          </button>
+        </div>
+      )}
+      {isError && <p className={css.emptyState}>Something went wrong</p>}
 
       {hasNextPage && (
-        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+        <button
+          className={css.loadMoreButton}
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+        >
           {isFetchingNextPage ? "Loading..." : "Load more"}
         </button>
       )}

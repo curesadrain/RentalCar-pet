@@ -1,0 +1,98 @@
+/* CarInfo.module.css (или отдельный NotFound.module.css) */
+
+/* === MOBILE === */
+.emptySearch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 16px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.emptyImage {
+  object-fit: contain;
+}
+
+.emptyHeader {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.emptyInfo {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.emptyButton {
+  margin-top: 24px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--light-blue);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.emptyButton:hover {
+  background: var(--dark-blue);
+}
+
+/* === TABLET === */
+@media (min-width: 768px) {
+  .emptySearch {
+    padding: 60px 24px;
+    max-width: 460px;
+  }
+
+  .imageWrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .emptyHeader {
+    font-size: 24px;
+  }
+
+  .emptyInfo {
+    font-size: 15px;
+  }
+
+  .emptyButton {
+    width: auto;
+    padding: 14px 40px;
+  }
+}
+
+/* === DESKTOP === */
+@media (min-width: 1440px) {
+  .emptySearch {
+    padding: 80px 24px;
+    max-width: 520px;
+  }
+
+  .imageWrapper {
+    width: 240px;
+    height: 240px;
+  }
+
+  .emptyHeader {
+    font-size: 28px;
+  }
+}
